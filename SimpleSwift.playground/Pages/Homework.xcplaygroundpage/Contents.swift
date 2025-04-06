@@ -27,13 +27,67 @@ print("Welcome to the UW Calculator Playground")
 //: For this latter set of operations, it is safe to assume that `["count"]` (with no additional arguments) is 0, `["avg"]` is also 0, and `["fact"]` is 0. `["1", "fact"]` should return 1, and `["0", "fact"]` should also return 1. (Yes, 0-factorial is 1. True story.)
 //: 
 func calculate(_ args: [String]) -> Int {
-    return -1
+    var result : Int
+    let num1 = Int(args[0]) ?? 0
+    switch args.count {
+    case 1:
+        result = 0
+    case 3:
+        let num2 = Int(args[2]) ?? 0
+        switch args[1] {
+        case "+":
+            result = num1 + num2
+        case "-":
+            result = num1 - num2
+        case "*":
+            result = num1 * num2
+        case "/":
+            result = num1 / num2
+        case "%":
+            result = num1 % num2
+        default:
+            result = 0
+        }
+    default:
+        let operation = args.last
+        switch operation {
+        case "count":
+            result = args.count - 1
+        case "avg":
+            let numsArray = Array(args.dropLast())
+            result = average(args)
+        case "fact":
+            result = factorial(Int(args[0]) ?? 0)
+        default:
+            result = 0
+        }
+    }
+    return result
 }
 
 func calculate(_ arg: String) -> Int {
-    return -1
+    let argSplit = arg.split(separator: " ")
+    let calculateArray = argSplit.map{ String($0) }
+    return calculate(calculateArray)
 }
 
+// Helper functions
+func average(_ nums : [String]) -> Int {
+    guard !nums.isEmpty else {
+        return 0
+    }
+    let numbers = nums.compactMap { Int($0) }
+    let sum = numbers.reduce(0, +)
+    return sum / numbers.count
+}
+
+func factorial(_ num : Int) -> Int {
+    if num == 0 {
+        return 1
+    } else {
+        return num * factorial(num - 1)
+    }
+}
 //: Below this are the test expressions/calls to verify if your code is correct.
 //:
 //: ***DO NOT MODIFY ANYTHING BELOW THIS***
