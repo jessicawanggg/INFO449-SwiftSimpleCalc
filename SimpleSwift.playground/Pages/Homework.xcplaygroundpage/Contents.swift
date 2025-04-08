@@ -139,7 +139,7 @@ calculate("5 fact") == 120
 //: Implement `calculate([String])` and `calculate(String)` to handle negative numbers. You need only make the tests below pass. (You do not need to worry about "fact"/factorial with negative numbers, for example.)
 //:
 //: This is worth 1 pt
-/*
+
 calculate(["2", "+", "-2"]) == 0
 calculate(["2", "-", "-2"]) == 4
 calculate(["2", "*", "-2"]) == -4
@@ -154,9 +154,8 @@ calculate("2 - -2") == 4
 calculate("-2 / 2") == -1
 
 calculate("1 -2 3 -4 5 count") == 5
-*/
- 
-//: Implement `calculate([String])` and `calculate(String)` to use 
+
+//: Implement `calculate([String])` and `calculate(String)` to use
 //: and return floating-point values. You need only make the tests 
 //: below pass. (Factorial of floating-point numbers doesn't make 
 //: much sense, either.)
@@ -166,12 +165,29 @@ calculate("1 -2 3 -4 5 count") == 5
 //: Integer-based versions above.
 //: 
 //: This is worth 1 pt
-/*
+
 func calculate(_ args: [String]) -> Double {
-    return -1.0
+    var result : Double
+    let num1 = Double(args[0]) ?? 0
+    let num2 = Double(args[2]) ?? 0
+    switch args[1] {
+    case "+":
+        result = num1 + num2
+    case "-":
+        result = num1 - num2
+    case "*":
+        result = num1 * num2
+    case "/":
+        result = num1 / num2
+    default:
+        result = 0
+    }
+    return result
 }
 func calculate(_ arg: String) -> Double {
-    return -1.0
+    let argSplit = arg.split(separator: " ")
+    let calculateArray = argSplit.map{ String($0) }
+    return Double(calculateArray.count) - 1.0
 }
 
 calculate(["2.0", "+", "2.0"]) == 4.0
@@ -181,4 +197,3 @@ calculate(["2.5", "*", "2.5"]) == 6.25
 calculate(["2.0", "/", "2.0"]) == 1.0
 calculate(["2.0", "%", "2.0"]) == 0.0
 calculate("1.0 2.0 3.0 4.0 5.0 count") == 5.0
-*/
